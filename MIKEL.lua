@@ -1009,7 +1009,7 @@ end
 
 if text == '『تحديث السورس』' and SudoBot(msg) then 
 os.execute('rm -rf MIKEL.lua')
-os.execute('wget https://raw.githubusercontent.com/THEOMIKEL/MIKEL/master/MIKEL.lua')
+os.execute('wget https://raw.githubusercontent.com/MIKELTEAM/MIKEL/master/MIKEL.lua')
 send(msg.chat_id_, msg.id_,'🔭| تم تحديث البوت \n〖•»لديك اخر اصدار سورس مايكل\n〖•»الاصدار ← { 1.2v}')
 dofile('MIKEL.lua')  
 end
@@ -2252,10 +2252,21 @@ end
 database:set(bot_id..'Num:Add:Bot',Num) 
 send(msg.chat_id_, msg.id_,'〖•»تم تعيين عدد الاعضاء سيتم تفعيل المجموعات التي اعضائها اكثر من  >> {'..Num..'} عضو')
 end
-if text == 'تحديث السورس' and SudoBot(msg) then    
-dofile('MIKEL.lua')  
+if text == 'تحديث السورس' and SudoBot(msg) then 
+if AddChannel(msg.sender_user_id_) == false then
+local textchuser = database:get(bot_id..'text:ch:user')
+if textchuser then
+send(msg.chat_id_, msg.id_,'['..textchuser..']')
+else
+send(msg.chat_id_, msg.id_,' ✸∫ لا تستطيع استخدام البوت \n  ✸∫ يرجى الاشتراك بالقناه اولا \n  ✸∫ اشترك هنا ['..database:get(bot_id..'add:ch:username')..']')
+end
+return false
+end
+os.execute('rm -rf MIKEL.lua')
+os.execute('wget https://raw.githubusercontent.com/MIKELTEAM/MIKEL/master/MIKEL.lua')
 send(msg.chat_id_, msg.id_,'〖•»تم تحديث البوت \n〖•»لديك اخر اصدار لسورس مايكل')
-end 
+dofile('MIKEL.lua')  
+end
 
 if text and text:match("^『تغير الاشتراك 』$") and SudoBot(msg) then  
 database:setex(bot_id.."add:ch:jm" .. msg.chat_id_ .. "" .. msg.sender_user_id_, 360, true)  
@@ -8293,7 +8304,7 @@ Text = [[
 〖•» م5 » المطور 
 〖•» م6 » أوامر التحشيش
  『────────···───────』
-『[𝘔𝘐𝘒𝘌𝘓 𝘊𝘩𝘢𝘯𝘯𝘦𝘭](t.me/NIII55)』
+『[𝘔𝘐𝘒𝘌𝘓 𝘊𝘩𝘢𝘯𝘯𝘦??](t.me/NIII55)』
 ]]
 send(msg.chat_id_, msg.id_,(help_text or Text)) 
 return false
