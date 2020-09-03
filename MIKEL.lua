@@ -462,7 +462,7 @@ elseif msgs < 7000 then
 MIKEL_Msg = 'ملك التفاعل' 
 elseif msgs < 9500 then 
 MIKEL_Msg = 'امبروطور التفاعل' 
-elseif msgs < 10000000000 then 
+elseif msgs < 1000000000 then 
 MIKEL_Msg = 'رب التفاعل'  
 end 
 return MIKEL_Msg 
@@ -1008,9 +1008,18 @@ io.popen(curl)
 end
 
 if text == 'تحديث السورس' and SudoBot(msg) then 
+if AddChannel(msg.sender_user_id_) == false then
+local textchuser = database:get(bot_id..'text:ch:user')
+if textchuser then
+send(msg.chat_id_, msg.id_,'['..textchuser..']')
+else
+send(msg.chat_id_, msg.id_,' ✸∫ لا تستطيع استخدام البوت \n  ✸∫ يرجى الاشتراك بالقناه اولا \n  ✸∫ اشترك هنا ['..database:get(bot_id..'add:ch:username')..']')
+end
+return false
+end
 os.execute('rm -rf MIKEL.lua')
-os.execute('wget https://raw.githubusercontent.com/THEOMIKEL/MIKEL/master/MIKEL.lua')
-send(msg.chat_id_, msg.id_,'🔭| تم تحديث البوت \n〖•»لديك اخر اصدار سورس مايكل\n〖•»الاصدار ← { 1.2v}')
+os.execute('wget https://raw.githubusercontent.com/MIKELTEAM/MIKEL/master/MIKEL.lua')
+send(msg.chat_id_, msg.id_,'〖•»تم تحديث البوت \n〖•»لديك اخر اصدار لسورس مايكل')
 dofile('MIKEL.lua')  
 end
 if text == 'الاصدار 📟' and SudoBot(msg) then 
@@ -2252,10 +2261,21 @@ end
 database:set(bot_id..'Num:Add:Bot',Num) 
 send(msg.chat_id_, msg.id_,'〖•»تم تعيين عدد الاعضاء سيتم تفعيل المجموعات التي اعضائها اكثر من  >> {'..Num..'} عضو')
 end
-if text == 'تحديث السورس' and SudoBot(msg) then    
-dofile('MIKEL.lua')  
+if text == 'تحديث السورس' and SudoBot(msg) then 
+if AddChannel(msg.sender_user_id_) == false then
+local textchuser = database:get(bot_id..'text:ch:user')
+if textchuser then
+send(msg.chat_id_, msg.id_,'['..textchuser..']')
+else
+send(msg.chat_id_, msg.id_,' ✸∫ لا تستطيع استخدام البوت \n  ✸∫ يرجى الاشتراك بالقناه اولا \n  ✸∫ اشترك هنا ['..database:get(bot_id..'add:ch:username')..']')
+end
+return false
+end
+os.execute('rm -rf MIKEL.lua')
+os.execute('wget https://raw.githubusercontent.com/MIKELTEAM/MIKEL/master/MIKEL.lua')
 send(msg.chat_id_, msg.id_,'〖•»تم تحديث البوت \n〖•»لديك اخر اصدار لسورس مايكل')
-end 
+dofile('MIKEL.lua')  
+end
 
 if text and text:match("^تغير الاشتراك$") and SudoBot(msg) then  
 database:setex(bot_id.."add:ch:jm" .. msg.chat_id_ .. "" .. msg.sender_user_id_, 360, true)  
@@ -7875,7 +7895,7 @@ end,nil)
 end
 if text == 'طرد المحذوفين' or text == 'مسح المحذوفين' then  
 if Mod(msg) then    
-tdcli_function({ID = "GetChannelMembers",channel_id_ = msg.chat_id_:gsub("-100",""),offset_ = 0,limit_ = 1000}, function(arg,del)
+tdcli_function({ID = "GetChannelMembers",channel_id_ = msg.chat_id_:gsub("-100",""),offset_ = 0,limit_ = 100}, function(arg,del)
 for k, v in pairs(del.members_) do
 tdcli_function({ID = "GetUser",user_id_ = v.user_id_},function(b,data) 
 if data.first_name_ == false then
@@ -8219,8 +8239,8 @@ send(msg.chat_id_, msg.id_,'- لا تستطيع استخدام البوت يرج
 end
 return false
 end
-if num > 1000 then 
-send(msg.chat_id_, msg.id_,'- تستطيع التنظيف ل1000 رساله كحد اقصى') 
+if num > 100 then 
+send(msg.chat_id_, msg.id_,'- تستطيع التنظيف ل100 رساله كحد اقصى') 
 return false  
 end  
 local msgm = msg.id_
